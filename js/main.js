@@ -1,274 +1,224 @@
-
-//This creates the map with Singapore layer//
-var map = L.map('map', {
-			zoomControl:true, maxZoom:18, minZoom:10
-		}).fitBounds([[1.1212205463686813,103.52073669433594],[1.548883579847398,103.98765563964844]]);
-		
-
-		var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
-
-		var hash = new L.Hash(map);
-		var feature_group = new L.featureGroup([]);
-		var raster_group = new L.LayerGroup([]);
-		var layerOrder=new Array();
-		var basemap_0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-			attribution: additional_attrib + '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-		});	
-		basemap_0.addTo(map);
-		var basemap_1 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', { 
-			attribution: additional_attrib + '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-		});	
-		
-//This creates the map with Singapore layer//
-
-
-
-/* IGNORE THESE Layers for reference only
-
-
-//This creates the SUBZONES with pop risk//
-function pop_DGPSubZone(feature, layer) {					
-	var popupContent = '<table><tr><th scope="row">ID</th><td>' + Autolinker.link(String(feature.properties['ID'])) + '</td></tr><tr><th scope="row">SZSCD</th><td>' + Autolinker.link(String(feature.properties['SZSCD'])) + '</td></tr><tr><th scope="row">SZZCD</th><td>' + Autolinker.link(String(feature.properties['SZZCD'])) + '</td></tr><tr><th scope="row">DGPZ_CODE</th><td>' + Autolinker.link(String(feature.properties['DGPZ_CODE'])) + '</td></tr><tr><th scope="row">DGPSZ_CODE</th><td>' + Autolinker.link(String(feature.properties['DGPSZ_CODE'])) + '</td></tr><tr><th scope="row">REGION</th><td>' + Autolinker.link(String(feature.properties['REGION'])) + '</td></tr><tr><th scope="row">DGPZ_NAME</th><td>' + Autolinker.link(String(feature.properties['DGPZ_NAME'])) + '</td></tr><tr><th scope="row">DGPSZ_NAME</th><td>' + Autolinker.link(String(feature.properties['DGPSZ_NAME'])) + '</td></tr><tr><th scope="row">Census1</th><td>' + Autolinker.link(String(feature.properties['Census1'])) + '</td></tr><tr><th scope="row">High_risk</th><td>' + Autolinker.link(String(feature.properties['High_risk'])) + '</td></tr></table>';
-	layer.bindPopup(popupContent);
-}
-
-function doStyleDGPSubZone(feature) {
-	if (feature.properties.High_risk >= 0.0 && feature.properties.High_risk <= 9096.4) {
-		return {
-			color: '#000000',
-			weight: '1.3',
-			fillColor: '#f7fbff',
-			opacity: '1.0',
-			fillOpacity: '1.0',
-		}
-	}
-	if (feature.properties.High_risk >= 9096.4 && feature.properties.High_risk <= 18192.8) {
-		return {
-			color: '#000000',
-			weight: '1.3',
-			fillColor: '#c7dcef',
-			opacity: '1.0',
-
-
-			fillOpacity: '1.0',
-		}
-	}
-	if (feature.properties.High_risk >= 18192.8 && feature.properties.High_risk <= 27289.2) {
-		return {
-			color: '#000000',
-			weight: '1.3',
-			fillColor: '#72b2d7',
-			opacity: '1.0',
-			fillOpacity: '1.0',
-		}
-	}
-	if (feature.properties.High_risk >= 27289.2 && feature.properties.High_risk <= 36385.6) {
-		return {
-			color: '#000000',
-			weight: '1.3',
-			fillColor: '#2878b8',
-			opacity: '1.0',
-			fillOpacity: '1.0',
-		}
-	}
-	if (feature.properties.High_risk >= 36385.6 && feature.properties.High_risk <= 45482.0) {
-		return {
-			color: '#000000',
-			weight: '1.3',
-			fillColor: '#08306b',
-			opacity: '1.0',
-			fillOpacity: '1.0',
-		}
-	}
-}
-var exp_DGPSubZoneJSON = new L.geoJson(exp_DGPSubZone,{
-	onEachFeature: pop_DGPSubZone,
-	style: doStyleDGPSubZone
+// When locator icon in datatable is clicked, go to that spot on the map
+$(document).on("click", ".go-map", function(e) {
+  e.preventDefault();
+  $el = $(this);
+  var lat = $el.data("lat");
+  var long = $el.data("long");
+  var zip = $el.data("zip");
+  $($("#nav a")[0]).tab("show");
+  Shiny.onInputChange("goto", {
+    lat: lat,
+    lng: long,
+    zip: zip,
+    nonce: Math.random()
+  });
 });
-//add comment sign to hide this layer on the map in the initial view.
-feature_group.addLayer(exp_DGPSubZoneJSON);
-
-
-//END pop Risk//
-
-//This creates the train stations//		
-		function pop_TrainStations(feature, layer) {					
-			var popupContent = '<table><tr><th scope="row">Station name:</th><td>' + Autolinker.link(String(feature.properties['STN_NAM'])) + '</td></tr></table>';
-			layer.bindPopup(popupContent);
-		}
-
-	
-
-
-		//THIS CREATES THE ZOOM BACK FUNCTION TO SG MAP
-
-		var zoomBack = L.control({position: 'topleft'});
-		zoomBack.onAdd = function(map){
-			this._div = L.DomUtil.create('div');
-			this._div.innerHTML = '<img src="pictures/zoom.png" alt="zoomback" id="zoomback" title="zoomback"/>';
-			return this._div;
-		};
-		zoomBack.addTo(map);
-
-
-		$('#zoomback').on('click', function (event) {
-    		map.setView([1.355312, 103.840068], 11);
-		});
-
-		//END OF ZOOM BACK FUNCTION
-
-		//LINE
-		function pop_mrtline(feature, layer) {					
-			var popupContent = '<table><tr><th scope="row">osm_id</th><td>' + Autolinker.link(String(feature.properties['osm_id'])) + '</td></tr><tr><th scope="row">name</th><td>' + Autolinker.link(String(feature.properties['name'])) + '</td></tr><tr><th scope="row">type</th><td>' + Autolinker.link(String(feature.properties['type'])) + '</td></tr></table>';
-			layer.bindPopup(popupContent);
-		}
-
-		function doStylemrtline(feature) {
-				return {
-					weight: 3.7,
-					color: '#000100',
-					fillColor:'#4aa41d',
-					dashArray: '',
-					opacity: 0.7,
-					fillOpacity: 1.0
-				};
-		}
-
-
-		var exp_mrtlineJSON = new L.geoJson(exp_mrtline,{
-			onEachFeature: pop_mrtline,
-			style: doStylemrtline
-		});
-		layerOrder[layerOrder.length] = exp_mrtlineJSON;
-		for (index = 0; index < layerOrder.length; index++) {
-			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
-		}
-		//add comment sign to hide this layer on the map in the initial view.
-		feature_group.addLayer(exp_mrtlineJSON);
-	
-		//proportionate symbol map RISK
-
-
-	var propotinateMapSubZone =
-	    L.geoJson(exp_expdengue, {
-	        pointToLayer: function (feature, latLng) {
-	            return L.circleMarker(latLng, {
-	                radius: feature.properties['CASE_SIZE']/8,
-	                weight: 1,
-	                opacity: 1.0,
-	                fillOpacity: 0.8,
-	                fillColor: propotinateMapSelectedColor,
-	                color: "black"// Border color
-	            });
-	        },
-	        style: propotionateStyle
-	    });
-
-
-	function propotionateStyle(feature) {
-	    return {
-	        fillOpacity: 0.6,
-	        fillColor: propotinateMapSelectedColor
-	    }
-	}
 
 
 
+//map
+L.mapbox.accessToken ='pk.eyJ1IjoiZWR3aW5lZHdpbmVkd2luZWR3aW5lZHdpbiIsImEiOiJjaW1uZGJ6MXYwMGc0dTVtNDJ6MmptYXo4In0.9eb8DNwVBuUIb6Xnc2i2MQ';
+    var map = L.mapbox.map('map', 'mapbox.streets').setView([1.3237, 103.8194], 11);
+    
+
+//THIS CREATES THE ZOOM BACK FUNCTION TO SG MAP
+
+var zoomBack = L.control({position: 'topleft'});
+    zoomBack.onAdd = function(map){
+        this._div = L.DomUtil.create('div');
+        this._div.innerHTML = '<img src="pictures/zoom.png" alt="zoomback" id="zoomback" title="zoomback"/>';
+        return this._div;
+    };
+
+zoomBack.addTo(map);
 
 
+$('#zoomback').on('click', function (event) {
+    map.setView([1.3237, 103.8194], 11);
+});
 
-		// THIS CREATES THE TRAIN STATIONS MAPPED FROM QGIS2LEAF
-		var exp_TrainStationsJSON = new L.geoJson(exp_TrainStations,{
-			onEachFeature: pop_TrainStations,
-			pointToLayer: function (feature, latlng) {  
-				return L.circleMarker(latlng, {
-					radius: 4.0,
-					fillColor: '#e31a1c',
-					color: '#000000',
-					weight: 1,
-					opacity: 0.9,
-					fillOpacity: 0.9
-				})
-			}
-		});
-		
-		feature_group.addLayer(exp_TrainStationsJSON);
-		//END OF TRAIN STATIONS
-
-		feature_group.addTo(map);
-		var title = new L.Control();
-		title.onAdd = function (map) {
-			this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-			this.update();
-			return this._div;
-		};
-		title.update = function () {
-			this._div.innerHTML = '<h2>Analysis of viral trends</h2>'
-		};
-		title.addTo(map);
-		var baseMaps = {
-		'Standard': basemap_0,
-		'Grayscale': basemap_1};
-
-		new L.Control.GeoSearch({
-		    provider: new L.GeoSearch.Provider.Google(),
-		    position: 'topcenter',
-		    showMarker: true,
-		    retainZoomLevel: false,
-		}).addTo(map);
-
-		feature_group.addTo(map);
-		var title = new L.Control();
-		title.onAdd = function (map) {
-			this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-			this.update();
-			return this._div;
-		};
-
-		/*THIS CREATES THE UPLOADING FUNCTION
-
-		L.Control.FileLayerLoad.LABEL = '<i class="fa fa-archive"></i>';
-		var fileControl = L.Control.fileLayerLoad({
-		    // See http://leafletjs.com/reference.html#geojson-options
-		    layerOptions: {style: {color: 'red'}},
-		    // Add to map after loading (default: true) ?
-		    addToMap: true,
-		    // File size limit in kb (default: 1024) ?
-		    fileSizeLimit: 1024,
-		    // Restrict accepted file formats (default: .geojson, .kml, and .gpx) ?
-		    formats: [
-		        '.geojson',
-		        '.kml',
-		        '.gpx'
-		    ]
-		}).addTo(map);
-		fileControl.loader.on('data:loaded', function (e) {
-		    layerControl.addOverlay(e.layer, e.filename);
-		});
-
-		END OF UPLOADING FUNCTION
-		*/
-
-
-		L.control.layers(baseMaps,
-			{	
-				"MRT Link": exp_mrtlineJSON,
-				"MRT Stations": exp_TrainStationsJSON,
-				"Higher Risk Population": exp_DGPSubZoneJSON,
-				"Dengue Clutter": propotinateMapSubZone
-				
-
-
-			},{collapsed:false}).addTo(map);
-		L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
+//END OF ZOOM BACK FUNCTION
 
 		
+//Search Function
+new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.Google(),
+    position: 'topcenter',
+    showMarker: true,
+    retainZoomLevel: false,
+}).addTo(map);
+
+//END OF SEARCH FUNCTION
 
 
 
+/* GEOLOCATION */
+
+var geolocate = document.getElementById('geolocate');
+var myLayer = L.mapbox.featureLayer().addTo(map);
+if (!navigator.geolocation) {
+    geolocate.innerHTML = 'Geolocation is not available';
+} else {
+    geolocate.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        map.locate();
+    };
+}
+
+// Once we've got a position, zoom and center the map
+// on it, and add a single marker.
+map.on('locationfound', function(e) {
+    map.fitBounds(e.bounds);
+
+    myLayer.setGeoJSON({
+        type: 'Feature',
+        geometry: {
+            type: 'Point',
+            coordinates: [e.latlng.lng, e.latlng.lat]
+        },
+        properties: {
+            'title': 'This is where you are at! <br/> Click to find out the nearest cafe!',
+            'marker-color': '#ff8888',
+            'marker-symbol': 'star',
+            'marker-size': 'large'
+        }
+    });
+
+    // And hide the geolocation button
+    geolocate.parentNode.removeChild(geolocate);
+});
+
+// If the user chooses not to allow their location
+// to be shared, display an error message.
+map.on('locationerror', function() {
+    geolocate.innerHTML = 'Cannot Locate';
+});
+
+/*GEOLOCATION*/
 
 
 
+/* TURF -> Finding nearest cafe*/
+
+myLayer.on('click', function (e) {
+    // Reset any and all marker sizes to small
+    reset();
+    // Get the GeoJSON 
+    var cafeFeatures = json_Cafes0Layer.getGeoJSON();
+    
+    var nearestCafe = turf.nearest(e.layer.feature, cafeFeatures);
+
+nearestCafe.properties['marker-size'] = 'large';
+    // Add the new GeoJSON 
+    json_Cafes0Layer.setGeoJSON(cafeFeatures);
+    
+    
+    
+    // for nearest cafe
+    json_Cafes0Layer.eachLayer(function (layer) {
+      layer.bindPopup(
+        'Name: <strong>' + layer.feature.properties.Name + '</strong><br/>' + 
+        'Address: <strong>' + layer.feature.properties.Address + '</strong>',{ closeButton: false });
+      if (layer.feature.properties['marker-size'] === 'large') {
+        layer.openPopup();
+      };
+    });
+  });
+
+  // When the map is clicked on anywhere, reset all
+  // markers to small
+  map.on('click', function (e) {
+    reset();
+  });
+
+
+/* TURF */
+
+
+/* Layers */
+var layers = document.getElementById('menu-ui');
+
+addLayer(myLayer, '<strong> My Location </strong>', 1);
+
+
+function addLayer(layer, name, zIndex) {
+    layer
+        .setZIndex(zIndex)
+        .addTo(map);
+
+    // Create a simple layer switcher that
+    // toggles layers on and off.
+    var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.innerHTML = name;
+
+    link.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+            this.className = '';
+        } else {
+            map.addLayer(layer);
+            this.className = 'active';
+        }
+    };
+
+    layers.appendChild(link);
+}
+
+		
+/* TURF -> 500m Buffer*/
+
+var pt = {
+  "type": "Feature",
+  "properties": {},
+  "geometry": {
+    "type": "Point",
+    "coordinates": [103.897878, 1.415119]
+  }
+};
+
+var ptLayer = L.mapbox.featureLayer().setGeoJSON(pt);
+var bufferLayer = L.mapbox.featureLayer().addTo(map);
+
+
+bufferLayer.eachLayer(function(layer) {
+    //pts
+    layer.options.draggable = true;
+    layer.on('drag', function(e) {
+        calculateBuffer();
+    });
+    //lines and polys
+    if(layer.editing){
+        layer.editing.enable();
+        layer.on('edit', function(e) {
+            calculateBuffer();
+        });
+    }
+});
+
+ptLayer.addTo(map);
+calculateBuffer();
+
+function calculateBuffer() {
+    var pt = turf.featurecollection(ptLayer.getLayers().map(function(f){
+            return f.toGeoJSON()
+        }));
+    var buffer = turf.buffer(pt, 500, 'meters');
+    buffer.properties = {
+        "fill": "#6BC65F",
+        "stroke": "#25561F",
+        "stroke-width": 2
+    };
+    bufferLayer.setGeoJSON(buffer);
+}
+
+
+addLayer(bufferLayer, '<strong> 500m Buffer </strong>', 3);
 
 
 

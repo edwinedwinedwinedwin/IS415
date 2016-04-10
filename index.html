@@ -1,74 +1,152 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>Sub-Urban Malls</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <head>
+        <meta charset=utf-8 />
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <title>Geospatial Analytics</title>
+        
+        <!-- ALL THE SCRIPTS-->
+        
+        <!-- mapbox script-->
+        <script src='js/mapbox.js'></script>
+        
+        
+        <!-- jquery -->
+        <script src='js/jquery.min.js'></script>
+        <script src='jqueryui/jquery-ui.js'></script>
+        
+        <!-- geosearch script-->
+        <script src='geosearch/l.control.geosearch.js'></script>
+        <script src='geosearch/l.geosearch.provider.esri.js'></script>
+        <script src='geosearch/l.geosearch.provider.google.js'></script>
+        
+        <!-- Autolinker.min.js-->
+        <script src='js/Autolinker.min.js'></script>
+        
+        <!-- turf -->
+        <script src='js/turf.min.js'></script>
+        
+        <!-- ALL THE STYLESHEETS-->
+        
+        <!-- mapbox css-->
+        <link href='css/mapbox.css' rel='stylesheet' />
+        
+        <!-- leaflet css-->
+        <link href='leaflet/leaflet.css' rel='stylesheet' />
+        
+        <!-- custom style -->
+        <link href='css/own_style.css' rel='stylesheet' />
+        
+        <!-- twitterbootstrap -->
+        <link href='bootstrap/css/bootstrap.css' rel='stylesheet' />
+        <link href='bootstrap/css/bootstrap-responsive.css' rel='stylesheet' />
+        <link href='bootstrap/css/bootstrap-responsive.css' rel='stylesheet' />
+        
+        
+        <!-- jqueryUI-->
+        <link href='jqueryui/jquery-ui.min.css' rel='stylesheet'/>       
+        
+        <!-- geosearch css-->
+        <link href='geosearch/l.geosearch.css' rel='stylesheet'/>       
     
-    <!-- links-->
-    <link rel="stylesheet" href="leaflet/leaflet.css" />
-
-	<link rel="stylesheet" type="text/css" href="css/own_style.css"/>
-
-	<link rel="stylesheet" href="font_awesome/font-awesome.css"/>
-
-	<link rel="stylesheet" href="geosearch/l.geosearch.css"/>
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	
-    <link rel="stylesheet" href="index.css" />
+        
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img id="logo" src="images/minoritylogo.png" width="70" height="40" alt="minorityReport logo" name="logo"/>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Geospatial Analytics</a>
+                 </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href='#' id='geolocate' class='ui-button'>Locate me!</a></li> 
+                    <li><a href="https://wiki.smu.edu.sg/1516t2is415g1/Group11_ProjectDetails">Wiki-Write up</a></li>
+                    <li><a href="">Code repository</a></li>
+                       
+                  </ul>
+                </div>
+            </div>
+        </nav>
+        
+    <style type="text/css">input[type="number"] {max-width: 80%;}</style>
+    <nav id='menu-ui' class='menu-ui'></nav>
+    <div id='map'></div>
     
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
-	
-	<!-- links end-->
-	
-	
-	<!-- js -->
-	<script scr="bootstrap/js/boostrap.js"> </script>
-	
-    <script src="index.js"> </script>
+    <!-- map script-->
     
-   	<script src="js/underscore.js"> </script>
-   
-   	<script src="js/jquery.min.js"> </script>
-   	
-	<script src="leaflet/leaflet.js"></script>
-
-	<script src="leaflet/leaflet.filelayer.js"></script>
-	
-	<script src="js/leaflet-hash.js"></script>
-
-	<script src="js/Autolinker.min.js"></script>
-
-	<script src="geosearch/l.control.geosearch.js"></script>
-
-	<script src="geosearch/l.geosearch.provider.google.js"></script>
-
-	<script src="geosearch/l.geosearch.provider.esri.js"></script>
-   	
-   	<!-- js end -->
-   	
-   	
+    <script src='js/main.js'></script>
+    <script src='data/json_Cafes0.js'></script>
+    <script src='data/rental.js'></script>
+        
+    <!-- the cafes -->
     
-</head>
-<body>
+        
+        
+    <!--
+     <div id="controls" style="top:60px;left:auto;right:10px;bottom:20px;width:330px;height:auto;position:fixed;cursor:move;"  class="draggable">
+            <h2>Data</h2>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="color">Color</label>
+              <div>
+                <select id="color"><option value="superzip" selected>Selectivity (adjustable)</option>
+                    <option value="centile">Tuition and Fees</option>
+                    <option value="college">Selectivity</option>
+                    <option value="income">Applicants</option>
+                    <option value="adultpop">Enrollment</option>
+                    <option value="l_enorllment">log(Enrollment)</option>
+                </select>
+                <script type="application/json" data-for="color" data-nonempty="">{}</script>
+              </div>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="size">Size</label>
+              <div>
+                <select id="size"><option value="superzip">Selectivity (adjustable)</option>
+                    <option value="centile">Tuition and Fees</option>
+                    <option value="college">Selectivity</option>
+                    <option value="income">Applicants</option>
+                    <option value="adultpop" selected>Enrollment</option>
+                    <option value="l_enorllment">log(Enrollment)</option>
+                </select>
+                <script type="application/json" data-for="size" data-nonempty="">{}</script>
+              </div>
+            </div>
+            <div data-display-if="input.color == &#39;superzip&#39; || input.size == &#39;superzip&#39;">
+              <div class="form-group shiny-input-container">
+                <label for="threshold">Selectivity threshold (admit rate less than)</label>
+                <input id="threshold" type="number" class="form-control" value="10"/>
+              </div>
+            </div>
+         <label class="control-label" for="colour">Select Colour</label>
+         <div>   
+            <select id="colour" onclick="colour(this.value)"> 
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+             </select>
+            <script>
+                function getValue("colour") {
+                    text = document.getElementById("colour").value; //value of the text input
+                    alert(text);
+                    return false;
+                }
+            </script>
+         </div>
 
-	<div id="menu">
-	
-		<a href="#" id="logoLink">
-			<img id="logo" src="minoritylogo.png" width="70" height="40" alt="minorityReport logo" name="logo">
-			<img id="logo" src="minorityreport.png" width="250" height="40" alt="minorityReport logo" name="logo">
-		</a>
-		<div id="menubuttons">
-		<a class="btn btn-default" href="https://wiki.smu.edu.sg/1516t2is415g1/Group11_ProjectDetails" 
-		role="button" id="aboutButton" target="_blank" id="aboutButton">Project Write-up</a>
-		</a>
-			
-		</div>
-	</div>
-	<div id="map"></div>
-		<script src="js/main.js"> </script>
-	
-	
-</body>
-</html>
+            
+        </div>
+          <script>$(".draggable").draggable();</script> 
+-->
+       
+
+        
+        
+    </body>
+    </html>
+

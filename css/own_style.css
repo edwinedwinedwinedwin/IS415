@@ -1,29 +1,120 @@
+body { 
+    margin:0;
+    padding:0; 
+}
 
-body {
-	padding: 0;
-	margin: 0;
+#map { 
+    position:absolute; 
+    top:50px; 
+    bottom:0; 
+    width:100%; 
+    
 }
-html, body, #map {
-	height: 100%;
-	width: 100%;
-	padding: 0;
-	margin: 0;
+div.outer {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
 }
-th {
-	text-align: left;
-	vertical-align: top;
+
+/* Customize fonts */
+body, label, input, button, select { 
+  font-family: 'Helvetica Neue', Helvetica;
+  font-weight: 200;
 }
-.info {
-	padding: 6px 8px;
-	font: 14px/16px Arial, Helvetica, sans-serif;
-	background: white;
-	background: rgba(255,255,255,0.8);
-	box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	border-radius: 5px;
+h1, h2, h3, h4 { font-weight: 400; }
+
+#controls {
+  /* Appearance */
+  background-color: white;
+  padding: 0 20px 20px 20px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.65;
+  zoom: 0.9;
+  transition: opacity 500ms 1s;
+  border: 1px solid;
+  border-radius: 15px;
 }
-.info h2 {
-	margin: 0 0 5px;
-	color: #777;
+#controls:hover {
+  /* Fade in while hovering */
+  opacity: 0.95;
+  transition-delay: 0;
 }
+
+/* Position and style citation */
+#cite {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 12px;
+}
+
+
+/* If not using map tiles, show a white background */
 .leaflet-container {
-	background: #fff;
+  background-color: white !important;
+}
+
+/*Layer Menu*/
+
+.menu-ui {
+  background:#fff;
+  position:absolute;
+  top:60px;right:10px;
+  z-index:1;
+  border-radius:3px;
+  width:120px;
+  border:1px solid rgba(0,0,0,0.4);
+  }
+.menu-ui a {
+    font-size:13px;
+    color:#404040;
+    display:block;
+    margin:0;padding:0;
+    padding:10px;
+    text-decoration:none;
+    border-bottom:1px solid rgba(0,0,0,0.25);
+    text-align:center;
+    }
+.menu-ui a:first-child {
+      border-radius:3px 3px 0 0;
+      }
+.menu-ui a:last-child {
+      border:none;
+      border-radius:0 0 3px 3px;
+      }
+.menu-ui a:hover {
+      background:#f8f8f8;
+      color:#404040;
+      }
+.menu-ui a.active {
+      background:#000000;
+      color:#FFF;
+      }
+.menu-ui a.active:hover {
+    background:#3074a4;
+        }
+
+
+/* Choropleth */
+.map-legend ul {
+  list-style: none;
+  padding-left: 0;
+  }
+.map-legend .swatch {
+  width:20px;
+  height:20px;
+  float:left;
+  margin-right:10px;
+  }
+.leaflet-popup-close-button {
+  display: none;
+  }
+.leaflet-popup-content-wrapper {
+  pointer-events: none;
+  }
+
