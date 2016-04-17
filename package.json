@@ -1,0 +1,14 @@
+{
+  "name": "mapbox",
+  "version": "1.0.0",
+  "description": "project",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
