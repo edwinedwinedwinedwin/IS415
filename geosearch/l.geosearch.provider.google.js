@@ -35,6 +35,8 @@ L.GeoSearch.Provider.Google = L.Class.extend({
         var parameters = L.Util.extend({
             address: qry
         }, this.options);
+        
+        
 
         var results = geocoder.geocode(parameters, function(data){
             data = {results: data};
@@ -52,6 +54,8 @@ L.GeoSearch.Provider.Google = L.Class.extend({
                     northEastLatLng = new L.LatLng( northEastGoogle.lat(), northEastGoogle.lng() );
                     southWestLatLng = new L.LatLng( southWestGoogle.lat(), southWestGoogle.lng() );
                     bounds = new L.LatLngBounds([ northEastLatLng, southWestLatLng ]);
+                    
+                    
                 }
                 else {
                     bounds = undefined;

@@ -101,20 +101,99 @@ h1, h2, h3, h4 { font-weight: 400; }
 
 
 /* Choropleth */
-.map-legend ul {
-  list-style: none;
-  padding-left: 0;
+.legend {
+			text-align: left;
+			line-height: 18px;
+			color: #555;
+		}
+		.legend i {
+			width: 18px;
+			height: 18px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.7;
+		}
+
+/*map overlay UI*/
+
+.map-overlay {
+    font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    position: absolute;
+    width: 25%;
+    bottom: 15;
+    left: 0;
+    padding: 10px;
+}
+
+.map-overlay .map-overlay-inner {
+    background-color: #fff;
+    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.map-overlay h2 {
+    line-height: 24px;
+    display: block;
+    margin: 0 0 10px;
+}
+
+.map-overlay .legend .bar {
+    height: 10px;
+    display: inline-block;
+}
+
+.map-overlay input {
+    background-color: transparent;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    cursor: ew-resize;
+}
+
+.menu-drop {
+  position:absolute;
+  bottom:10px;
+  right:10px;
   }
-.map-legend .swatch {
-  width:20px;
-  height:20px;
-  float:left;
-  margin-right:10px;
+path {
+  -webkit-transition:fill 200ms;
+          transition:fill 200ms;
   }
-.leaflet-popup-close-button {
-  display: none;
+
+
+/*subzone query*/
+
+.subzones {
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:1000;
   }
-.leaflet-popup-content-wrapper {
-  pointer-events: none;
+  .subzones strong {
+    background:#404040;
+    color:#fff;
+    display:block;
+    padding:10px;
+    border-radius:3px;
+    }
+
+
+
+/* coordinates*/
+pre.ui-coordinates {
+  position:absolute;
+  bottom:20px;
+  left:10px;
+  padding:5px 10px;
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+  font-size:11px;
+  line-height:18px;
+  border-radius:3px;
   }
+
+
 

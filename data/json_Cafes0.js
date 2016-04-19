@@ -5022,31 +5022,3 @@ var json_Cafes0={
 }
 
 
-for(var i = 0; i < json_Cafes0.features.length; i++) {
-              json_Cafes0.features[i].properties['marker-color'] = '#DC143C';
-              json_Cafes0.features[i].properties['marker-symbol'] = 'cafe';
-              json_Cafes0.features[i].properties['marker-size'] = 'small';
-            };
-            var json_Cafes0Layer = L.mapbox.featureLayer(json_Cafes0).addTo(map);
-    
-       
-        json_Cafes0Layer.eachLayer(function (layer) {
-    layer.bindPopup(
-        'Name: <strong>' + layer.feature.properties.Name + '</strong><br/>' + 
-        'Address: <strong>' + layer.feature.properties.Address + '</strong>', 
-        { closeButton: false });
-  }).addTo(map);
-        json_Cafes0Layer.on('mouseover', function (e) {
-        e.layer.openPopup();
-  });
-
-
-function reset() {
-    var cafeFeatures = json_Cafes0Layer.getGeoJSON();
-    for (var i = 0; i < cafeFeatures.features.length; i++) {
-      cafeFeatures.features[i].properties['marker-size'] = 'small';
-    };
-    json_Cafes0Layer.setGeoJSON(cafeFeatures);
-  };
-
-addLayer(json_Cafes0Layer, '<strong> Cafes </strong>', 2);

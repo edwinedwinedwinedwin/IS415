@@ -9,6 +9,8 @@
         <!-- mapbox script-->
         <script src='js/mapbox.js'></script>
         
+        <!-- Autolinker -->
+        <script src='js/Autolinker.min.js'></script>
         
         <!-- jquery -->
         <script src='js/jquery.min.js'></script>
@@ -18,12 +20,23 @@
         <script src='geosearch/l.control.geosearch.js'></script>
         <script src='geosearch/l.geosearch.provider.esri.js'></script>
         <script src='geosearch/l.geosearch.provider.google.js'></script>
+        <script src='geosearch/Control.Geocoder.js'></script>
+        
+        <!-- favico-->
+        <script src='js/favico.js'></script>
         
         <!-- Autolinker.min.js-->
         <script src='js/Autolinker.min.js'></script>
         
         <!-- turf -->
         <script src='js/turf.min.js'></script>
+        
+        <!-- ds.vs.min -->
+        <script src='js/d3.v3.min.js'></script>
+        
+        <!-- leaflet-pip-->
+        <script src='js/leaflet-pip.js'></script>
+        
         
         <!-- ALL THE STYLESHEETS-->
         
@@ -40,7 +53,6 @@
         <link href='bootstrap/css/bootstrap.css' rel='stylesheet' />
         <link href='bootstrap/css/bootstrap-responsive.css' rel='stylesheet' />
         <link href='bootstrap/css/bootstrap-responsive.css' rel='stylesheet' />
-        
         
         <!-- jqueryUI-->
         <link href='jqueryui/jquery-ui.min.css' rel='stylesheet'/>       
@@ -62,13 +74,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Geospatial Analytics</a>
+                    <a class="navbar-brand" href="#">Query Maybe</a>
                  </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href='#' id='geolocate' class='ui-button'>Locate me!</a></li> 
                     <li><a href="https://wiki.smu.edu.sg/1516t2is415g1/Group11_ProjectDetails">Wiki-Write up</a></li>
-                    <li><a href="">Code repository</a></li>
+                    <li><a href="https://shafiqisveryshiny.shinyapps.io/rasterascii/">Analysis</a></li>
                        
                   </ul>
                 </div>
@@ -77,14 +89,25 @@
         
     <style type="text/css">input[type="number"] {max-width: 80%;}</style>
     <nav id='menu-ui' class='menu-ui'></nav>
+    <script>
+        var subzones = document.getElementById('subzones');    
+    </script>
+        
     <div id='map'></div>
+    <pre id='coordinates' class='ui-coordinates'></pre>
+        
+    <div id='variables' class='menu-drop'></div>
     
     <!-- map script-->
     
-    <script src='js/main.js'></script>
+    <script src='data/Feb2016RentalPrice.js'></script>
+    <script src='data/json_BusStop0.js'></script>
+    <script src='data/json_TrainStations0.js'></script>
     <script src='data/json_Cafes0.js'></script>
     <script src='data/rental.js'></script>
-        
+    <script src='data/json_TotalPopulationBySubzone0.js'></script>
+    <script src='js/main.js'></script>    
+
     <!-- the cafes -->
     
         
